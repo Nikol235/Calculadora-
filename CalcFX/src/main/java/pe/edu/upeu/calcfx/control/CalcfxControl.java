@@ -22,28 +22,50 @@ public class CalcfxControl {
        bin=Integer.toBinaryString(kitti);
        txtResultado.setText(bin);
     }
-    private void cPotencia (){
-        btnP
-    }
-    private void cLex  (){
-        static class Token {
-            String tipo;
-            String valor;
-
-            Token(String tipo, String valor) {
-                this.tipo = tipo;
-                this.valor = valor;
+    private void raizC(String operador) {
+        try {
+            String texto = txtResultado.getText().trim();
+            if (!texto.isEmpty()) {
+                double num = Double.parseDouble(texto);
+                if (num < 0) {
+                    txtResultado.setText("Error: número negativo");
+                } else {
+                    double resultado = Math.sqrt(num);
+                    txtResultado.setText(String.valueOf(resultado));
+                }
             }
-            public String toString() {
-                return "(" + tipo + ", " + valor + ")";}
+        } catch (NumberFormatException e) {
+            txtResultado.setText("Error: entrada inválida");
         }
     }
-    private void(){
-
+    private void insertarPi() {
+        double pi = Math.PI; // Valor aproximado: 3.141592653589793
+        String texto = "π = " + pi;
+        txtResultado.setText(texto);
     }
-    private void (){
 
+
+    private void sobre (){
+            try {
+                String texto = txtResultado.getText().trim();
+                if (!texto.isEmpty()) {
+                    double num = Double.parseDouble(texto);
+                    if (num == 0) {
+                        txtResultado.setText("Error: división por cero");
+                    } else {
+                        double resultado = 1 / num;
+                        String expresion = "1 / " + texto + " = " + resultado;
+                        txtResultado.setText(expresion);
+                    }
+                }
+            } catch (NumberFormatException e) {
+                txtResultado.setText("Error: entrada inválida");
+            }
     }
+
+    private void lex (){
+    }
+
     private void agregarOperador(String operador) {
 
         if(!txtResultado.getText().isEmpty() && txtResultado.getText().length()>=4){
@@ -54,8 +76,6 @@ public class CalcfxControl {
         }else{
             txtResultado.appendText(" " + operador + " ");
         }
-
-
 
     }
 
@@ -87,6 +107,8 @@ public class CalcfxControl {
                         return;
                     }
                     break;
+                case "^":
+                    resultado = Math.pow(num1,num2);
             }
             String[] dd=String.valueOf(resultado).split("\\.");
             System.out.println(dd.length);
@@ -109,11 +131,14 @@ public class CalcfxControl {
         Button boton = (Button) event.getSource();
        switch (boton.getId()){
            case "btn0", "btn1","btn2","btn3", "btn4", "btn5", "btn6", "btn7", "btn8", "btn9": {escribirNumero(boton.getText());}break;
-           case "btnDiv", "btnMult","btnRest", "btnSum":{ agregarOperador(boton.getText()); }break;
+           case "btnDiv", "btnMult","btnRest", "btnSum", "btnP":{ agregarOperador(boton.getText()); }break;
            case "btnBorrar":{ txtResultado.setText(""); }break;
            case "btnIgual":{  calcularResultado();  }break;
-           case "btnBin":{cBinario("");}
-           case "btnP":{ }
+           case "btnBin":{cBinario("");}break;
+           case "btnR" : {raizC (""); }
+           case "btnCal" :{sobre ();}
+
+
            default: {} break;
        }
     }
